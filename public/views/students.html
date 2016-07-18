@@ -1,0 +1,39 @@
+<!-- This will be where the teacher can see their list of students and add/edit/delete. -->
+
+<div ng-controller="StudentsController">
+
+    <div class="jumbotron text-center">
+        <h1>Students Page</h1>
+
+        <p>{{ tagline }}</p>
+    </div>
+
+    <h2>Students</h2>
+    <div ng-controller="StudentsController as studentsList">
+      <input type="text" ng-model="studentsList.search" class="search-query" id="students_search"
+             placeholder="Search">
+      [ <a href="" ng-click="studentsList.archive()">archive</a> ]
+      <ul class="unstyled">
+        <li ng-repeat="student in studentsList.students | filter:studentsList.search | orderBy:'name'">
+          <label class="checkbox">
+            <input type="checkbox" ng-model="student.done">
+            <span class="done-{{student.done}}">
+              <ul>
+                <li>Text: {{student.text}}</li>
+                <li>Name: {{student.name}}</li>
+                <li>Groups: {{student.groups}}</li>
+                <li>Reminders: {{student.reminders}}</li>
+                <li>Note: {{student.note}}</li>
+              </ul>
+            </span>
+          </label>
+        </li>
+      </ul>
+      <form ng-submit="studentsList.addStudent()">
+        <input type="text" ng-model="studentsList.studentText"  size="30"
+               placeholder="add new student here">
+        <input class="btn-primary" type="submit" value="add">
+      </form>
+    </div>
+
+</div>

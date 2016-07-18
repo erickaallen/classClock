@@ -1,0 +1,40 @@
+<!-- This will be the page a teacher can visit to see all their reminders and add/edit/delete reminders. -->
+
+<div ng-controller="RemindersController">
+
+    <div class="jumbotron text-center">
+        <h1>Reminders Page</h1>
+
+        <p>{{ tagline }}</p>
+    </div>
+
+    <h2>Reminders</h2>
+    <div ng-controller="RemindersController as remindersList">
+      <input type="text" ng-model="remindersList.search" class="search-query" id="reminders_search"
+             placeholder="Search">
+      <span>{{remindersList.remaining()}} of {{remindersList.reminders.length}} remaining</span>
+      [ <a href="" ng-click="remindersList.archive()">archive</a> ]
+      <ul class="unstyled">
+        <li ng-repeat="reminder in remindersList.reminders | filter:remindersList.search | orderBy:'name'">
+          <label class="checkbox">
+            <input type="checkbox" ng-model="reminder.done">
+            <span class="done-{{reminder.done}}">
+              <ul>
+                <li>Text: {{reminder.text}}</li>
+                <li>Date: {{reminder.date}}</li>
+                <li>Event Name: {{reminder.eventName}}</li>
+                <li>Students: {{reminder.studentNames}}</li>
+                <li>Note: {{reminder.note}}</li>
+              </ul>
+            </span>
+          </label>
+        </li>
+      </ul>
+      <form ng-submit="remindersList.addReminder()">
+        <input type="text" ng-model="remindersList.reminderText"  size="30"
+               placeholder="add new reminder here">
+        <input class="btn-primary" type="submit" value="add">
+      </form>
+    </div>
+
+</div>

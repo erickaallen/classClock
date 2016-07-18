@@ -1,0 +1,13 @@
+{
+  "name": "classclock2",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "latest",
+    "font-awesome": "latest",
+    "animate.css": "latest",
+    "angular": "latest",
+    "angular-route": "latest",
+    "angular-ui-clock": "^0.5.1",
+    "ngAnimate": "*"
+  }
+}

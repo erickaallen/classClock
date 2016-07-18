@@ -1,0 +1,22 @@
+html {
+  overflow-y: scroll;
+}
+
+body {
+  padding-top: 50px;
+  padding-bottom: 100px;
+}
+
+#todo-list {
+  margin-bottom: 30px;
+}
+
+/* Completed reminders */
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+
+ul {
+  list-style: none;
+}
