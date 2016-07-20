@@ -2,15 +2,13 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-//define our model
-var reminderSchema = new Schema({
+//define our schema
+var ReminderSchema = new Schema({
   eventName: String,
   studentNames: Array,
-  date: Date,
+  date: Date, 
   note: String
 });
 
-var Reminder = mongoose.model('Reminder', reminderSchema);
-
 // module.exports allows us to pass this to other files when it is called
-module.exports = Reminder;
+module.exports = mongoose.model('Reminder', ReminderSchema);

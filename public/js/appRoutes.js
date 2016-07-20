@@ -34,6 +34,14 @@ angular.module('appRoutes', [])
       .when('/live', {
           templateUrl:  'views/live.html',
           controller:   'LiveController'
+      })
+
+      .when('/admin', {
+          redirectTo:'/'
+      })
+
+      .when('/users', {
+          redirectTo:'/'
       });
 
       // from Angular editable list example-- return to this later

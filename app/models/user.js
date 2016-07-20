@@ -22,18 +22,20 @@ var UserSchema = new Schema({
 
 // hash the password before the user is saved
 UserSchema.pre('save', function(next) {
-  var user = this;
-  // hash the password only if the password has been changed or user is new
-  if (!user.isModified('password')) return next();
-});
+    var user = this;
 
-// generate the hash
-bcrypt.hash(user.password, null, null, function(err, hash) {
-  if (err) return next(err);
+    // hash the password only if the password has been changed or user is new
+    if (!user.isModified('password'))
+        return next();
 
-  // change the password to the hashed version
-  user.password = hash;
-  next();
+    // generate the hash
+    bcrypt.hash(user.password, null, null, function(err, hash) {
+      if (err) return next(err);
+
+      // change the password to the hashed version
+      user.password = hash;
+      next();
+    });
 });
 
 // method to compare a given password with the database hash
