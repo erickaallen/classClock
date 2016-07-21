@@ -1,32 +1,84 @@
 angular.module('RemindersCtrl', [])
 
-  .controller('RemindersController', function() {
-    var remindersList = this;
-    remindersList.reminders = [
-      {text:'Class Pictures', done:false},
-      {text:'Field Trip', done:true}];
+    .controller('RemindersController', function() {
 
-    remindersList.addReminder = function() {
-      remindersList.reminders.push({text:remindersList.reminderText, done:false});
-      remindersList.reminderText = '';
-    };
+      // bind this to vm (view-model)
+      var vm = this;
 
-    remindersList.remaining = function() {
-      var count = 0;
-      angular.forEach(remindersList.reminders, function(reminder) {
-        count += reminder.done ? 0 : 1;
-      });
-      return count;
-    };
+      // define variables and objects on this
+      // this lets them be available to our views
 
-    remindersList.archive = function() {
-      var oldReminders = remindersList.reminders;
-      remindersList.reminders = [];
-      angular.forEach(oldReminders, function(reminder) {
-        if (!reminder.done) remindersList.reminders.push(reminder);
-      });
-    };
-  });
+      // define a basic variable
+      vm.message = 'View, edit, and delete your reminders';
+
+      // TODO:: define a list of reminders (remove later)
+      vm.reminders = [
+        {
+          eventName: 'Class Pictures',
+          studentNames: 'Entire Class',
+          date: '',
+          note: 'Sample note'
+        },
+        {
+          eventName: 'Lunchtime',
+          studentNames: 'Entire Class',
+          date: '',
+          note: 'Another sample note'
+        },
+        {
+          eventName: 'Reading Group Time',
+          studentNames: ['Emily', 'Justin', 'Nate'],
+          date: '',
+          note: 'Yet another sample note'
+        }
+      ];
+
+      // information that comes from our reminder form
+      vm.reminderData = {};
+
+      vm.addReminder = function() {
+
+        // add a reminder to the list
+        vm.reminders.push({
+          eventName: vm.reminderData.eventName,
+          studentNames: vm.reminderData.studentNames,
+          date: vm.reminderData.date,
+          note: vm.reminderData.note
+        });
+
+        // after our computer has been added, clear the form
+        vm.reminderData = {};
+      };
+    });
+
+
+  // .controller('RemindersController', function() {
+  //   var remindersList = this;
+  //   remindersList.reminders = [
+  //     {text:'Class Pictures', done:false},
+  //     {text:'Field Trip', done:true}];
+  //
+  //   remindersList.addReminder = function() {
+  //     remindersList.reminders.push({text:remindersList.reminderText, done:false});
+  //     remindersList.reminderText = '';
+  //   };
+  //
+  //   remindersList.remaining = function() {
+  //     var count = 0;
+  //     angular.forEach(remindersList.reminders, function(reminder) {
+  //       count += reminder.done ? 0 : 1;
+  //     });
+  //     return count;
+  //   };
+  //
+  //   remindersList.archive = function() {
+  //     var oldReminders = remindersList.reminders;
+  //     remindersList.reminders = [];
+  //     angular.forEach(oldReminders, function(reminder) {
+  //       if (!reminder.done) remindersList.reminders.push(reminder);
+  //     });
+  //   };
+  // });
 
 
 

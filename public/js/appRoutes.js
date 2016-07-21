@@ -13,7 +13,8 @@ angular.module('appRoutes', [])
       // home page
       .when('/', {
           templateUrl: 'views/home.html',
-          controller: 'HomeController'
+          controller: 'HomeController',
+          // controllerAs: ''
       })
 
       .when('/manage', {
@@ -23,7 +24,8 @@ angular.module('appRoutes', [])
 
       .when('/reminders', {
           templateUrl:  'views/reminders.html',
-          controller:   'RemindersController'
+          controller:   'RemindersController',
+          controllerAs: 'reminders'
       })
 
       .when('/students', {

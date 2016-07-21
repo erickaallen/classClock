@@ -8,6 +8,6 @@
     "angular": "latest",
     "angular-route": "latest",
     "angular-ui-clock": "^0.5.1",
-    "ngAnimate": "*"
+    "angular-bootstrap": "^2.0.0",
   }
 }
