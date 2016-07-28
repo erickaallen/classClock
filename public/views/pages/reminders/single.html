@@ -1,0 +1,51 @@
+<div class="page-header">
+    <h1 ng-if="reminder.type == 'create'">Create Reminder</h1>
+    <h1 ng-if="reminder.type == 'edit'">Edit Reminder</h1>
+</div>
+
+<form class="form-horizontal" ng-submit="reminder.saveReminder()">
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Date</label>
+        <div class="col-sm-6">
+            <input type="datetime-local" class="form-control" placeholder="" ng-model="reminder.reminderData.date">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Event Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" placeholder="Event Name" ng-model="reminder.reminderData.eventName">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Student Name(s)</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" placeholder="Student Name(s)" ng-model="reminder.reminderData.studentNames">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Notes</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" placeholder="Notes" ng-model="reminder.reminderData.note">
+        </div>
+    </div>
+
+    <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+        <button type="submit" class="btn btn-success btn-lg btn-block" ng-if="reminder.type == 'create'">Create Reminder</button>
+        <button type="submit" class="btn btn-success btn-lg btn-block" ng-if="reminder.type == 'edit'">Edit Reminder</button>
+    </div>
+    </div>
+
+</form>
+
+<div class="row show-hide-message" ng-show="reminder.message">
+    <div class="col-sm-6 col-sm-offset-2">
+        <div class="alert alert-info">
+            {{ reminder.message }}
+        </div>
+    </div>
+</div>

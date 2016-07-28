@@ -4,7 +4,9 @@ angular.module('UserCtrl', ['UserService'])
 
       var vm = this;
 
-      // set a processing variable to show loading things
+      vm.message = 'View, edit, and delete users'
+
+      // set a processing variable to show loading
       vm.processing = true;
 
       // grab all the users at a page load

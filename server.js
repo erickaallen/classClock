@@ -9,7 +9,8 @@ var port            = process.env.PORT || 3000;       // set the port
 var database        = require('./config/database');   // load the db config
 var morgan          = require('morgan');              // log requests to the console (express4)
 var bodyParser      = require('body-parser');         // pull information from HTML POST (express4)
-// var methodOverride  = require('method-override');     // simulate DELETE and PUT (express4)
+var Sugar           = require('sugar');               // date formatting
+var methodOverride  = require('method-override');     // simulate DELETE and PUT (express4)
 var User            = require('./app/models/user');
 var Reminder        = require('./app/models/reminder');
 var Student         = require('./app/models/student');
@@ -39,7 +40,7 @@ app.use(function(req, res, next) {                              // configure app
       res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
       next();
 });
-// app.use(methodOverride('X-HTTP-Method-Override'));              // override with X-HTTP-Method-Override header in request. simulate DELETE/PUT
+app.use(methodOverride('X-HTTP-Method-Override'));              // override with X-HTTP-Method-Override header in request. simulate DELETE/PUT
 
 
 ////////////

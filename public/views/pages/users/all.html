@@ -10,10 +10,13 @@
 
 </div>
 
-<div class+"jumbotron text-center" ng-show="user.processing">
+<div class="jumbotron text-center" ng-show="user.processing">
     <span class="glyphicon glyphicon-repeat spinner"></span>
     <p>Loading Users...</p>
 </div>
+
+<!-- Search for reminders in the list -->
+<input type="text" ng-model="usersList.search" class="search-query" id="users_search" placeholder="Search">
 
 <table class="table table-bordered table-striped" ng-show="user.users">
     <thead>
@@ -25,7 +28,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="person in user.users">
+        <tr ng-repeat="person in user.users | filter:usersList.search | orderBy: 'name'">
             <td>{{ person._id }}</td>
             <td>{{ person.name }}</td>
             <td>{{ person.username }}</td>

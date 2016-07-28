@@ -37,17 +37,33 @@ angular.module('appRoutes', ['ngRoute'])
           controllerAs: 'user'
       })
 
+      // show all reminders
+      .when('/reminders', {
+          templateUrl:  'views/pages/reminders/all.html',
+          controller:   'RemindersController',
+          controllerAs: 'reminder'
+      })
+
+      // page to create a new reminder
+      // same view as edit page
+      .when('/reminders/create', {
+          templateUrl:'views/pages/reminders/single.html',
+          controller: 'ReminderCreateController',
+          controllerAs: 'reminder'
+      })
+
+      // page to edit a reminder
+      .when('/reminders/:reminder_id', {
+          templateUrl:'views/pages/reminders/single.html',
+          controller: 'ReminderEditController',
+          controllerAs: 'reminder'
+      })
+
       .when('/manage', {
           templateUrl:  'views/pages/manage.html',
           // controller:   'ManageController'
       })
 
-      .when('/reminders', {
-          templateUrl:  'views/pages/reminders.html',
-          controller:   'RemindersController',
-          controllerAs: 'main'
-      })
-      
       .when('/live', {
           templateUrl:  'views/pages/live.html',
           // controller:   'LiveController'
