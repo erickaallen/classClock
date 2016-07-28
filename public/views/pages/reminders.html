@@ -1,0 +1,47 @@
+<!-- This will be the page a teacher can visit to see all their reminders and add/edit/delete reminders. -->
+
+<div ng-controller="RemindersController as main">
+
+    <div class="jumbotron text-center">
+        <h1>Reminders Page</h1>
+        <p>{{ main.message }}</p>
+    </div>
+
+    <h2>Class Reminders</h2>
+
+    <!-- Search for reminders in the list -->
+    <input type="text" ng-model="remindersList.search" class="search-query" id="reminders_search" placeholder="Search">
+
+    <!-- form to add reminder to the list -->
+    <form class="form-inline" ng-submit="main.addReminder()">
+
+      <input type="datetime-local" class="form-control" placeholder="" ng-model="main.reminderData.date">
+      <input type="text" class="form-control" placeholder="Event Name" ng-model="main.reminderData.eventName">
+      <input type="text" class="form-control" placeholder="Student Name(s)" ng-model="main.reminderData.studentNames">
+      <input type="text" class="form-control" placeholder="Notes" ng-model="main.reminderData.note">
+
+      <button type="submit" class="btn btn-success">Add</button>
+    </form>
+
+
+    <!-- display the list of reminders using ng-repeat -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td>Date</td>
+          <td>Event Name</td>
+          <td>Student Name(s)</td>
+          <td>Notes</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="reminder in main.reminders | filter:remindersList.search | orderBy:'date'">
+          <td>{{ reminder.date }}</td>
+          <td>{{ reminder.eventName }}</td>
+          <td>{{ reminder.studentNames }}</td>
+          <td>{{ reminder.note }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+</div>

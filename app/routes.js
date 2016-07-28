@@ -17,7 +17,9 @@ var User      = require('./models/user'),
     Student   = require('./models/student');
 
 // expose the routes to our app with module.exports
-module.exports = function (app) {
+module.exports = function (app, express) {
+
+  var express = require('express');
 
   /////////////////////
   // frontend routes //
@@ -37,7 +39,33 @@ module.exports = function (app) {
   // get an instance of the express router
   var apiRouter = express.Router();
 
-  // route for authenticating users
+  // route to generate a sample user
+  apiRouter.post('/sample', function(req, res) {
+
+      // look for the user named ericka
+      User.findOne({ 'username': 'ericka' }, function(err, user) {
+
+          // if there is no ericka user, create one
+          if (!user) {
+              var sampleUser = new User();
+
+              sampleUser.name = 'Ericka';
+              sampleUser.username = 'ericka';
+              sampleUser.password = 'supersecret';
+
+              sampleUser.save();
+          } else {
+              console.log(user);
+
+              // if there is an ericka, update her password
+              user.password = 'supersecret';
+              user.save();
+          }
+      });
+  });
+
+
+  // route for authenticating users (POST localhost:3000/api/authenticate)
   apiRouter.post('/authenticate', function(req, res) {
 
       // find the user
@@ -85,25 +113,11 @@ module.exports = function (app) {
   });
 
 
-  ////// login route //////
-
-  // app.route('/login')
-  //
-  //   // show the form (GET localhost:3000/login)
-  //   .get(function(req, res) {
-  //     res.send('this is the login form');
-  //   })
-  //
-  //   // process the form (POST localhost:3000/login)
-  //   .post(function(req,res) {
-  //     console.log('processing');
-  //     res.send('processing the login form!');
-  //   });
-
-  ////// routes for the api //////
-
-  // middleware to use for all requests
+  // route middleware to verify token for all requests
   apiRouter.use(function(req, res, next) {
+
+    // log visitor
+    console.log('Somebody just came to our app!');
 
     // check header or url parameters or post parameters for token
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -122,7 +136,7 @@ module.exports = function (app) {
 
           // if everything is good, save to request for use in other routes
           req.decoded = decoded;
-          next();
+          next(); // go to the next routes and don't stop here
         }
       });
     } else {
@@ -137,6 +151,7 @@ module.exports = function (app) {
   });
 
   // other api routes (the authenticated routes)
+  // testing to make sure it's working (GET localhost:3000/api)
   apiRouter.get('/', function(req, res) {
     res.json({ message: 'yay! welcome to our api!'});
   });
@@ -145,7 +160,7 @@ module.exports = function (app) {
 
   apiRouter.route('/users')
 
-    // create a user (accessed at POST localhost:3000/api/users)
+    // create a user (POST localhost:3000/api/users)
     .post(function(req, res) {
 
         // create a new instance of the User model
@@ -184,7 +199,7 @@ module.exports = function (app) {
 
     apiRouter.route('/users/:user_id')
 
-        // get the user with that id (accessed at GET localhost:3000/api/users/:user_id)
+        // get the user with that id (GET localhost:3000/api/users/:user_id)
         .get(function(req, res) {
             User.findById(req.params.user_id, function(err, user) {
                   if (err) return res.send(err);

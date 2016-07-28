@@ -20,7 +20,7 @@ var superSecret     = 'thisappisgonnabeawesome';
 // configuration //
 ///////////////////
 
-mongoose.connect(database.localUrl, function(err) {                  // connect to our mongoDB database
+mongoose.connect(database.remoteUrl, function(err) {                  // connect to our mongoDB database
   if(err) {
     console.log('Failed connecting to Mongodb!');
   } else {

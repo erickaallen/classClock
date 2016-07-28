@@ -1,71 +1,58 @@
-angular.module('appRoutes', [])
-.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-
-  // from Angular example
-  var resolveReminders = {
-    reminders: function (Reminders) {
-      return Reminders.fetch();
-    }
-  };
+angular.module('appRoutes', ['ngRoute'])
+.config(function($routeProvider, $locationProvider) {
 
   $routeProvider
 
-      // home page
       .when('/', {
-          templateUrl: 'views/home.html',
-          controller: 'HomeController',
-          // controllerAs: ''
+          templateUrl: 'views/pages/home.html',
+          controller: 'MainController',
+          controllerAs: 'main'
+      })
+
+      .when('/login', {
+          templateUrl: 'views/pages/login.html',
+          controller: 'MainController',
+          controllerAs: 'login'
+      })
+
+      // show all users
+      .when('/users', {
+          templateUrl:'views/pages/users/all.html',
+          controller: 'UserController',
+          controllerAs: 'user'
+      })
+
+      // page to create a new user
+      // same view as edit page
+      .when('/users/create', {
+          templateUrl:'views/pages/users/single.html',
+          controller: 'UserCreateController',
+          controllerAs: 'user'
+      })
+
+      // page to edit a user
+      .when('/users/:user_id', {
+          templateUrl:'views/pages/users/single.html',
+          controller: 'UserEditController',
+          controllerAs: 'user'
       })
 
       .when('/manage', {
-          templateUrl:  'views/manage.html',
-          controller:   'ManageController'
+          templateUrl:  'views/pages/manage.html',
+          // controller:   'ManageController'
       })
 
       .when('/reminders', {
-          templateUrl:  'views/reminders.html',
+          templateUrl:  'views/pages/reminders.html',
           controller:   'RemindersController',
-          controllerAs: 'reminders'
+          controllerAs: 'main'
       })
-
-      .when('/students', {
-          templateUrl:  'views/students.html',
-          controller:   'StudentsController'
-      })
-
+      
       .when('/live', {
-          templateUrl:  'views/live.html',
-          controller:   'LiveController'
-      })
-
-      .when('/admin', {
-          redirectTo:'/'
-      })
-
-      .when('/users', {
-          redirectTo:'/'
+          templateUrl:  'views/pages/live.html',
+          // controller:   'LiveController'
       });
-
-      // from Angular editable list example-- return to this later
-      // .when('/remindersList', {
-      //   controller:'RemindersListController as remindersList',
-      //   templateUrl:'remindersList.html',
-      //   resolve: resolveReminders
-      // })
-      // .when('/editReminder/:reminderId', {
-      //   controller:'EditReminderController as editReminder',
-      //   templateUrl:'remindersDetail.html',
-      //   resolve: resolveReminders
-      // })
-      // .when('/newReminder', {
-      //   controller:'NewReminderController as editReminder',
-      //   templateUrl:'remindersDetail.html',
-      //   resolve: resolveReminders
-      // })
-      // .otherwise({
-      //   redirectTo:'/'
-      // });
 
   $locationProvider.html5Mode(true);
 
-}]);
+});
