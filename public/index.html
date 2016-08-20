@@ -44,18 +44,18 @@
 
         <!-- Nav Bar -->
         <header>
-            <div class="navbar navbar-inverse" ng-if="main.loggedIn">
+            <div class="navbar" ng-if="main.loggedIn">
               <div class="container">
 
                 <div class="navbar-header">
-                    <a href="/" class="navbar-brand"><span class="glyphicon glyphicon-fire text-danger"></span>Class Clock</a>
+                    <a href="/" class="navbar-brand"><span class="glyphicon glyphicon-time text-danger"></span>Class Clock</a>
                 </div>
 
                 <!-- LINK TO OUR PAGES. ANGULAR HANDLES THE ROUTING HERE -->
                 <ul class="nav navbar-nav">
-                    <li><a href="/live">Live</a></li>
-                    <li><a href="/reminders">Reminders</a></li>
-                    <li><a href="/users"><span class="glyphicon glyphicon-user"></span>Users</a></li>
+                    <li><a href="/live"><span class="glyphicon glyphicon-hourglass"></span>Live</a></li>
+                    <li><a href="/reminders"><span class="glyphicon glyphicon-bell"></span>Reminders</a></li>
+                    <li><a href="/users"><span class="glyphicon glyphicon-apple"></span>Users</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -68,13 +68,9 @@
             </div>
         </header>
 
-        <main class="container">
-
             <!-- ANGULAR DYNAMIC CONTENT -->
             <div ng-view></div>
 
-        </main>
-
     </body>
-    
+
 </html>

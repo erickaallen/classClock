@@ -1,21 +1,22 @@
 <!-- This will be the page that will allow users to login. -->
 
-<div ng-controller="MainController as main">
+<div class="hero-unit" ng-controller="MainController as main">
 
-    <div class="jumbotron text-center">
+    <div class="container welcome">
         <h1>Welcome to Class Clock!</h1>
 
         <p>{{ main.message }}</p>
-    </div>
 
-    <div ng-if="!main.loggedIn">
-        <p>Login</p>
-        <a href="/login" class="btn btn-primary">Login</a>
-    </div>
 
-    <div ng-if="main.loggedIn">
-        <p>Manage Your Users</p>
-        <a href="/users" class="btn btn-primary">View Users</a>
-    </div>
+        <div ng-if="!main.loggedIn">
+            <p>Login</p>
+            <a href="/login" class="btn btn-primary">Login</a>
+        </div>
 
+        <div ng-if="main.loggedIn">
+            <p>Manage Your Users</p>
+            <a href="/users" class="btn btn-primary">View Users</a>
+        </div>
+
+    </div>
 </div>
