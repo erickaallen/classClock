@@ -15,26 +15,6 @@ main {
   padding-top: 30px;
 }
 
-.hero-unit {
-   background: url('../img/meditatingLaptopWoman.jpg');
-   background-size: cover;
-   padding: 0px;
-   margin L.C             : 0px;
-   font-size: 18px;
-   font-weight: 200;
-   line-height: 30px;
-   text-align: center;
-   webkit-border-radius: 0px;
-   moz-border-radius: 0px;
-   border-radius: 0px;
-}
-
-.welcome {
-  padding: 0px;
-  border: 0px;
-  margin: 0px;
-}
-
 /* Completed reminders */
 .done-true {
   text-decoration: line-through;

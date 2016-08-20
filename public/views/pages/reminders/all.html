@@ -1,48 +1,49 @@
 <!-- This will be the page a teacher can visit to see all their reminders and add/edit/delete reminders. -->
+<div class="container">
 
-<div class="page-header">
+    <div class="page-header">
 
-    <h1>Class Reminders
-        <a href="/reminders/create" class="btn btn-default">
-          <span class="glyphicon glyphicon-plus"></span>
-          New Reminder
-        </a>
-    </h1>
+        <h1>Class Reminders
+            <a href="/reminders/create" class="btn btn-default">
+              <span class="glyphicon glyphicon-plus"></span>
+              New Reminder
+            </a>
+        </h1>
 
-</div>
+    </div>
 
-<div class="jumbotron text-center" ng-show="reminder.processing">
-    <span class="glyphicon glyphicon-repeat spinner"></span>
-    <p>Loading Reminders...</p>
-</div>
+    <div class="jumbotron text-center" ng-show="reminder.processing">
+        <span class="glyphicon glyphicon-repeat spinner"></span>
+        <p>Loading Reminders...</p>
+    </div>
 
-    <!-- Search for reminders in the list -->
-    <input type="text" ng-model="remindersList.search" class="search-query" id="reminders_search" placeholder="Search">
+        <!-- Search for reminders in the list -->
+        <input type="text" ng-model="remindersList.search" class="search-query" id="reminders_search" placeholder="Search">
 
 
-    <!-- display the list of reminders using ng-repeat -->
-    <table class="table table-bordered table-striped" ng-show=reminder.reminders>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Event Name</th>
-          <th>Student Name(s)</th>
-          <th>Notes</th>
-          <th class="col-sm-2"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="event in reminder.reminders | filter:remindersList.search | orderBy:'date'">
-          <td>{{ event.date }}</td>
-          <td>{{ event.eventName }}</td>
-          <td>{{ event.studentNames }}</td>
-          <td>{{ event.note }}</td>
-          <td class="col-sm-2">
-              <a href="/reminders/{{ event._id }}" class="btn btn-danger">Edit</a>
-              <a href="#" ng-click="reminder.deleteReminder(event._id)" class="btn btn-primary">Delete</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        <!-- display the list of reminders using ng-repeat -->
+        <table class="table table-bordered table-striped" ng-show=reminder.reminders>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Event Name</th>
+              <th>Student Name(s)</th>
+              <th>Notes</th>
+              <th class="col-sm-2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="event in reminder.reminders | filter:remindersList.search | orderBy:'date'">
+              <td>{{ event.date }}</td>
+              <td>{{ event.eventName }}</td>
+              <td>{{ event.studentNames }}</td>
+              <td>{{ event.note }}</td>
+              <td class="col-sm-2">
+                  <a href="/reminders/{{ event._id }}" class="btn btn-danger">Edit</a>
+                  <a href="#" ng-click="reminder.deleteReminder(event._id)" class="btn btn-primary">Delete</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
 </div>
