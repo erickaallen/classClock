@@ -42,23 +42,23 @@ module.exports = function (app, express) {
   // route to generate a sample user
   apiRouter.post('/sample', function(req, res) {
 
-      // look for the user named ericka
-      User.findOne({ 'username': 'ericka' }, function(err, user) {
+      // look for the user named test
+      User.findOne({ 'username': 'test' }, function(err, user) {
 
-          // if there is no ericka user, create one
+          // if there is no test user, create one
           if (!user) {
               var sampleUser = new User();
 
-              sampleUser.name = 'Ericka';
-              sampleUser.username = 'ericka';
-              sampleUser.password = 'supersecret';
+              sampleUser.name = 'Test';
+              sampleUser.username = 'test';
+              sampleUser.password = 'password';
 
               sampleUser.save();
           } else {
               console.log(user);
 
-              // if there is an ericka, update her password
-              user.password = 'supersecret';
+              // if there is a test, update her password
+              user.password = 'password';
               user.save();
           }
       });
