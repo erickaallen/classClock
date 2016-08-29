@@ -1,4 +1,4 @@
-angular.module('classclock', ['ngRoute', 'appRoutes', 'ds.clock', 'MainCtrl', 'HomeCtrl', 'ManageCtrl', 'RemindersCtrl', 'LiveCtrl', 'UserCtrl', 'StudentsCtrl', 'ReminderService', 'StudentService', 'UserService', 'AuthService'])
+angular.module('classclock', ['ngRoute', 'appRoutes', 'ds.clock', 'MainCtrl', 'RemindersCtrl', 'UserCtrl', 'ReminderService', 'UserService', 'AuthService'])
 
 // application config to integrate token into requests
 .config(function($httpProvider) {

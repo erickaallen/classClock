@@ -59,14 +59,8 @@ angular.module('appRoutes', ['ngRoute'])
           controllerAs: 'reminder'
       })
 
-      .when('/manage', {
-          templateUrl:  'views/pages/manage.html',
-          // controller:   'ManageController'
-      })
-
       .when('/live', {
           templateUrl:  'views/pages/live.html',
-          // controller:   'LiveController'
       });
 
   $locationProvider.html5Mode(true);

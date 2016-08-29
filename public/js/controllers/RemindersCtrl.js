@@ -66,7 +66,7 @@ angular.module('RemindersCtrl', ['ReminderService'])
                   vm.reminderData = {};
                   vm.message = data.message;
               });
-      };  
+      };
   })
 
   // controller applied to reminder edit page

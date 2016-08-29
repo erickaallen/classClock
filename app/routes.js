@@ -39,30 +39,30 @@ module.exports = function (app, express) {
   // get an instance of the express router
   var apiRouter = express.Router();
 
-  // route to generate a sample user
-  apiRouter.post('/sample', function(req, res) {
-
-      // look for the user named test
-      User.findOne({ 'username': 'test' }, function(err, user) {
-
-          // if there is no test user, create one
-          if (!user) {
-              var sampleUser = new User();
-
-              sampleUser.name = 'Test';
-              sampleUser.username = 'test';
-              sampleUser.password = 'password';
-
-              sampleUser.save();
-          } else {
-              console.log(user);
-
-              // if there is a test, update her password
-              user.password = 'password';
-              user.save();
-          }
-      });
-  });
+  // // route to generate a sample user
+  // apiRouter.post('/sample', function(req, res) {
+  //
+  //     // look for the user named test
+  //     User.findOne({ 'username': 'test' }, function(err, user) {
+  //
+  //         // if there is no test user, create one
+  //         if (!user) {
+  //             var sampleUser = new User();
+  //
+  //             sampleUser.name = 'Test';
+  //             sampleUser.username = 'test';
+  //             sampleUser.password = 'password';
+  //
+  //             sampleUser.save();
+  //         } else {
+  //             console.log(user);
+  //
+  //             // if there is a test, update her password
+  //             user.password = 'password';
+  //             user.save();
+  //         }
+  //     });
+  // });
 
 
   // route for authenticating users (POST localhost:3000/api/authenticate)
@@ -96,7 +96,8 @@ module.exports = function (app, express) {
             // create a token
             var token = jwt.sign({
               name: user.name,
-              username: user.username
+              username: user.username,
+              user_id: user._id
             }, superSecret, {
               expiresIn: '24h' // expires in 24 hours
             });
@@ -151,10 +152,6 @@ module.exports = function (app, express) {
   });
 
   // other api routes (the authenticated routes)
-  // testing to make sure it's working (GET localhost:3000/api)
-  apiRouter.get('/', function(req, res) {
-    res.json({ message: 'yay! welcome to our api!'});
-  });
 
   ////// CRUD for /users //////
 
@@ -256,9 +253,10 @@ module.exports = function (app, express) {
         var reminder = new Reminder();
 
         // set the reminder information (comes from the request)
+        reminder.user_id = req.params.user_id;
+        reminder.date = req.body.date;
         reminder.eventName = req.body.eventName;
         reminder.studentNames = req.body.studentNames;
-        reminder.date = req.body.date;
         reminder.note = req.body.note;
 
 
@@ -271,9 +269,9 @@ module.exports = function (app, express) {
         });
     })
 
-    // get all the reminders (accessed at GET localhost:3000/api/reminders)
+    // get all the reminders for the logged in user (accessed at GET localhost:3000/api/reminders)
     .get(function(req, res) {
-        Reminder.find(function(err, reminders) {
+        Reminder.find({ user_id: req.params.user_id }, function(err, reminders) {
             if (err) res.send(err);
 
             // return the reminders
@@ -301,9 +299,9 @@ module.exports = function (app, express) {
 
                 // set new reminder information if it exists in the request
                 // do not save to db if blank/not changed
+                if (req.body.date) reminder.date = req.body.date;
                 if (req.body.eventName) reminder.eventName = req.body.eventName;
 			          if (req.body.studentNames) reminder.studentNames = req.body.studentNames;
-			          if (req.body.date) reminder.date = req.body.date;
                 if (req.body.note) reminder.note = req.body.note;
 
                 // save the reminder
@@ -327,98 +325,6 @@ module.exports = function (app, express) {
             });
         });
 
-
-
-
-
-
-////// CRUD for /students //////
-
-apiRouter.route('/students')
-
-  // create a student (accessed at POST localhost:3000/api/students)
-  .post(function(req, res) {
-
-      // create a new instance of the Student model
-      var student = new Student();
-
-      // set the students information (comes from the request)
-      student.name = req.body.name;
-      student.groups = req.body.groups;
-      student.reminders = req.body.reminders;
-      student.note = req.body.note;
-
-
-      // save the student and check for errors
-      student.save(function(err) {
-          if (err) {
-              // duplicate entry
-              if (err.code == 11000)
-                  return res.json({ success: false, message: 'A student with that name already exists. ' });
-              else
-                  return res.send(err);
-          }
-
-          // return message
-          res.json({ message: 'Student created!' });
-      });
-  })
-
-  // get all the students (accessed at GET localhost:3000/api/students)
-  .get(function(req, res) {
-      Student.find(function(err, students) {
-          if (err) res.send(err);
-
-          // return the students
-          res.json(students);
-      });
-  });
-
-
-  apiRouter.route('/students/:student_id')
-
-      // get the student with that id (accessed at GET localhost:3000/api/students/:student_id)
-      .get(function(req, res) {
-          Student.findById(req.params.student_id, function(err, student) {
-                if (err) return res.send(err);
-
-                // return that user
-                res.json(student);
-          });
-      })
-
-      // update the user with this id
-      .put(function(req, res) {
-          Student.findById(req.params.student_id, function(err, student) {
-              if (err) return res.send(err);
-
-              // set new student information if it exists in the request
-              // do not save to db if blank/not changed
-              if (req.body.name) student.name = req.body.name;
-              if (req.body.groups) student.groups = req.body.groups;
-              if (req.body.reminders) student.reminders = req.body.reminders;
-              if (req.body.note) student.note = req.body.note;
-
-              // save the user
-              student.save(function(err) {
-                  if (err) return res.send(err);
-
-                  // return a message
-                  res.json({ message: 'Student updated!' });
-              });
-          });
-      })
-
-      // delete the user with this id
-      .delete(function(req, res) {
-          Student.remove({
-            _id: req.params.student_id
-          }, function(err, student) {
-              if (err) return res.send(err);
-
-              res.json({ message: 'Successfully deleted!' });
-          });
-      });
 
   // api endpoint to get user information
   apiRouter.get('/me', function(req, res) {
@@ -447,11 +353,6 @@ apiRouter.route('/students')
   // users page (localhost:3000/admin/users)
   adminRouter.get('/users', function(req, res) {
     res.send('I show all the users!');
-  });
-
-  // posts page (localhost:3000/admin/posts)
-  adminRouter.get('/posts', function(req, res) {
-    res.send('I show all the posts!');
   });
 
   // apply the routes to the application

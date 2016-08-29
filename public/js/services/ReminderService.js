@@ -14,7 +14,7 @@ angular.module('ReminderService', [])
 			return $http.get('/api/reminders/' + id);
 		};
 
-		// get all reminders
+		// get all reminders for the logged in user
 		reminderFactory.all = function() {
 			return $http.get('/api/reminders/');
 		};

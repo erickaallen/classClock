@@ -5,6 +5,7 @@ var Sugar = require('sugar');
 
 //define our schema
 var ReminderSchema = new Schema({
+  user_id: String,
   date: Date,
   eventName: String,
   studentNames: String,
