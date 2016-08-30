@@ -39,32 +39,6 @@ module.exports = function (app, express) {
   // get an instance of the express router
   var apiRouter = express.Router();
 
-  // // route to generate a sample user
-  // apiRouter.post('/sample', function(req, res) {
-  //
-  //     // look for the user named test
-  //     User.findOne({ 'username': 'test' }, function(err, user) {
-  //
-  //         // if there is no test user, create one
-  //         if (!user) {
-  //             var sampleUser = new User();
-  //
-  //             sampleUser.name = 'Test';
-  //             sampleUser.username = 'test';
-  //             sampleUser.password = 'password';
-  //
-  //             sampleUser.save();
-  //         } else {
-  //             console.log(user);
-  //
-  //             // if there is a test, update her password
-  //             user.password = 'password';
-  //             user.save();
-  //         }
-  //     });
-  // });
-
-
   // route for authenticating users (POST localhost:3000/api/authenticate)
   apiRouter.post('/authenticate', function(req, res) {
 
@@ -253,7 +227,7 @@ module.exports = function (app, express) {
         var reminder = new Reminder();
 
         // set the reminder information (comes from the request)
-        reminder.user_id = req.params.user_id;
+        reminder.user_id = req.decoded.user_id;
         reminder.date = req.body.date;
         reminder.eventName = req.body.eventName;
         reminder.studentNames = req.body.studentNames;
@@ -271,7 +245,7 @@ module.exports = function (app, express) {
 
     // get all the reminders for the logged in user (accessed at GET localhost:3000/api/reminders)
     .get(function(req, res) {
-        Reminder.find({ user_id: req.params.user_id }, function(err, reminders) {
+        Reminder.find({ user_id: req.decoded.user_id }, function(err, reminders) {
             if (err) res.send(err);
 
             // return the reminders
